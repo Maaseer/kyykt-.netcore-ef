@@ -25,7 +25,6 @@ namespace kyykt.Controllers
             this.logger = logger;
         }
 
-        // 根据临时id获得唯一ID
         public string getOpenID(string wxId)
         {
             //请求的url

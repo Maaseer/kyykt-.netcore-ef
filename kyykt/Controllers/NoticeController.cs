@@ -15,11 +15,11 @@ namespace kyykt.Controllers
         studentContext db = new studentContext();
         // GET: api/<controller>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Notice>>> Get()
+        public async Task<ActionResult<Notice>> Get(string ClassId,int NoticeId)
         {
-            var result = await db.Notice.ToListAsync();
+            var result = await db.Notice.Where(s => s.ClassId == ClassId && s.NoticeId == NoticeId).FirstOrDefaultAsync();
             if (result == null)
-                return NotFound("没有通知");
+                return NotFound("未找到通知");
             return result;
         }
 
