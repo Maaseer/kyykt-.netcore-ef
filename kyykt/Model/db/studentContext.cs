@@ -15,13 +15,15 @@ namespace kyykt
         {
         }
 
+        public virtual DbSet<ClassMessage> ClassMessage { get; set; }
+        public virtual DbSet<ClassSignIn> ClassSignIn { get; set; }
         public virtual DbSet<ClassTime> ClassTime { get; set; }
         public virtual DbSet<NeedToDo> NeedToDo { get; set; }
         public virtual DbSet<Notice> Notice { get; set; }
         public virtual DbSet<OpeningClass> OpeningClass { get; set; }
         public virtual DbSet<Selection> Selection { get; set; }
-        public virtual DbSet<StuSignIn> StuSignIn { get; set; }
         public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<StudentSignIn> StudentSignIn { get; set; }
         public virtual DbSet<TeaCourse> TeaCourse { get; set; }
         public virtual DbSet<Teacher> Teacher { get; set; }
 
@@ -36,6 +38,46 @@ namespace kyykt
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ClassMessage>(entity =>
+            {
+                entity.HasKey(e => e.MessageId)
+                    .HasName("PRIMARY");
+
+                entity.Property(e => e.MessageId).HasColumnType("int(11)");
+
+                entity.Property(e => e.ClassId).HasColumnType("varchar(20)");
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasColumnType("varchar(500)");
+
+                entity.Property(e => e.MessageTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReplyMessage).HasColumnType("varchar(500)");
+
+                entity.Property(e => e.StudentId).HasColumnType("varchar(20)");
+            });
+
+            modelBuilder.Entity<ClassSignIn>(entity =>
+            {
+                entity.HasKey(e => e.SignInCode)
+                    .HasName("PRIMARY");
+
+                entity.Property(e => e.SignInCode).HasColumnType("varchar(50)");
+
+                entity.Property(e => e.ClassId).HasColumnType("varchar(20)");
+
+                entity.Property(e => e.IsOverDue)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.SignInDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SignNum)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
+            });
+
             modelBuilder.Entity<ClassTime>(entity =>
             {
                 entity.HasKey(e => new { e.Time, e.Place })
@@ -82,6 +124,8 @@ namespace kyykt
 
                 entity.Property(e => e.Content).HasColumnType("varchar(100)");
 
+                entity.Property(e => e.Extra).HasColumnType("varchar(100)");
+
                 entity.Property(e => e.Finish).HasColumnType("varchar(5)");
 
                 entity.Property(e => e.Hide)
@@ -116,6 +160,10 @@ namespace kyykt
                     .HasDefaultValueSql("''");
 
                 entity.Property(e => e.Content).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.Head)
+                    .HasColumnName("head")
+                    .HasColumnType("varchar(30)");
 
                 entity.Property(e => e.Time).HasColumnType("varchar(20)");
 
@@ -199,50 +247,9 @@ namespace kyykt
                     .HasConstraintName("selection_ibfk_1");
             });
 
-            modelBuilder.Entity<StuSignIn>(entity =>
-            {
-                entity.HasKey(e => new { e.ClassId, e.StudentId, e.Times })
-                    .HasName("PRIMARY");
-
-                entity.ToTable("stuSignIn");
-
-                entity.HasIndex(e => e.StudentId)
-                    .HasName("FK_ID1");
-
-                entity.Property(e => e.ClassId)
-                    .HasColumnType("varchar(20)")
-                    .HasDefaultValueSql("''");
-
-                entity.Property(e => e.StudentId)
-                    .HasColumnType("varchar(20)")
-                    .HasDefaultValueSql("''");
-
-                entity.Property(e => e.Times)
-                    .HasColumnType("int(11)")
-                    .HasDefaultValueSql("'0'");
-
-                entity.Property(e => e.SignIn).HasColumnType("varchar(5)");
-
-                entity.HasOne(d => d.Class)
-                    .WithMany(p => p.StuSignIn)
-                    .HasForeignKey(d => d.ClassId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("stuSignIn_ibfk_1");
-
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.StuSignIn)
-                    .HasForeignKey(d => d.StudentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("stuSignIn_ibfk_2");
-            });
-
             modelBuilder.Entity<Student>(entity =>
             {
                 entity.ToTable("student");
-
-                entity.HasIndex(e => e.WxId)
-                    .HasName("WxId")
-                    .IsUnique();
 
                 entity.Property(e => e.StudentId)
                     .HasColumnType("varchar(20)")
@@ -250,13 +257,27 @@ namespace kyykt
 
                 entity.Property(e => e.Name).HasColumnType("varchar(20)");
 
-                entity.Property(e => e.Picture).HasColumnType("varchar(50)");
+                entity.Property(e => e.Picture).HasColumnType("varchar(200)");
 
                 entity.Property(e => e.Sex).HasColumnType("enum('男','女')");
 
                 entity.Property(e => e.Tel).HasColumnType("varchar(20)");
 
                 entity.Property(e => e.WxId).HasColumnType("varchar(50)");
+            });
+
+            modelBuilder.Entity<StudentSignIn>(entity =>
+            {
+                entity.HasKey(e => new { e.SignInCode, e.StudentId })
+                    .HasName("PRIMARY");
+
+                entity.Property(e => e.SignInCode)
+                    .HasColumnType("varchar(50)")
+                    .HasDefaultValueSql("''");
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnType("varchar(20)")
+                    .HasDefaultValueSql("''");
             });
 
             modelBuilder.Entity<TeaCourse>(entity =>
@@ -309,7 +330,7 @@ namespace kyykt
 
                 entity.Property(e => e.Occupation).HasColumnType("varchar(20)");
 
-                entity.Property(e => e.Picture).HasColumnType("varchar(50)");
+                entity.Property(e => e.Picture).HasColumnType("varchar(200)");
 
                 entity.Property(e => e.Sex).HasColumnType("enum('男','女')");
 

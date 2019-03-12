@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace kyykt.Controllers
@@ -15,7 +13,7 @@ namespace kyykt.Controllers
         studentContext db = new studentContext();
         // GET: api/<controller>
         [HttpGet]
-        public async Task<ActionResult<Notice>> Get(string ClassId,int NoticeId)
+        public async Task<ActionResult<Notice>> Get(string ClassId, int NoticeId)
         {
             var result = await db.Notice.Where(s => s.ClassId == ClassId && s.NoticeId == NoticeId).FirstOrDefaultAsync();
             if (result == null)
@@ -41,7 +39,7 @@ namespace kyykt.Controllers
                 result.Time = value.Time;
                 result.ClassId = value.ClassId;
                 result.Content = value.Content;
-                result.head = value.head;
+                result.Head = value.Head;
                 await db.SaveChangesAsync();
             }
             catch { return BadRequest("修改通知出错"); }

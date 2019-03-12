@@ -17,7 +17,7 @@ namespace kyykt.Controllers
     [Route("api/[controller]")]
     public class loginController : Controller
     {
-         studentContext db = new studentContext();
+        studentContext db = new studentContext();
         ILogger<loginController> logger;
 
         public loginController(ILogger<loginController> logger)
@@ -48,13 +48,13 @@ namespace kyykt.Controllers
             {
                 wxId = ja["openid"].ToString();
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
             return wxId;
         }
- //----------------------------------------------------------------------------------------------       
+        //----------------------------------------------------------------------------------------------       
         //根据微信ID返回学生信息
         // GET api/login/wxid
         [HttpGet("{wxId}")]
@@ -83,25 +83,26 @@ namespace kyykt.Controllers
                 return NotFound();
             return st;
         }
-//-------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------
         //绑定学号
         // POST api/login   JSON：WxId ，StudentId
         [HttpPost]
-        public async Task<ActionResult<Student>> Post([FromBody]regist value)   
+        public async Task<ActionResult<Student>> Post([FromBody]regist value)
         {
-            
+
+
             //获得openID
             string openID = getOpenID(value.WxId);
             //若openID已存在，则该微信已被绑定
             if (openID == null)
                 return BadRequest("验证微信号失败");
             var result = await db.Student.FirstOrDefaultAsync(s => s.WxId.Equals(openID));
-            if(result != null)
+            if (result != null)
                 return BadRequest("该微信已绑定其余学号");
 
             var student = await db.Student.FirstOrDefaultAsync(s => s.StudentId == value.StudentId);
             //如果能根据学号检索到学生，则表示该学号已被绑定
-            if (student.WxId!= "")
+            if (student.WxId != "")
             {
                 return BadRequest("该学号已被绑定");
             }
@@ -109,14 +110,16 @@ namespace kyykt.Controllers
             if (student == null)
                 return BadRequest("学号不存在");
             //绑定微信openID
-            
-            try {
+
+            try
+            {
                 student.WxId = openID;
                 student.Picture = value.Picture;
                 await db.SaveChangesAsync();
-            } catch { return BadRequest("登陆失败"); }
+            }
+            catch { return BadRequest("登陆失败"); }
             //保存数据库
-            
+
             //返回学生信息 
             return student;
         }

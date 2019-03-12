@@ -13,12 +13,6 @@ namespace kyykt.Controllers
     public class CourseController : Controller
     {
         studentContext db = new studentContext();
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<controller>/5
         [HttpGet("{TeacherId}")]
@@ -33,10 +27,11 @@ namespace kyykt.Controllers
                 return result;
 
             }
-            catch {
+            catch
+            {
                 return BadRequest();
             }
-            
+
         }
         [HttpGet]
         public async Task<ActionResult<TeaCourse>> Get(string CourseId)
@@ -62,7 +57,7 @@ namespace kyykt.Controllers
         {
             try
             {
-                var result = await db.TeaCourse.Where(s=>s.CourseId == value.CourseId).FirstOrDefaultAsync();
+                var result = await db.TeaCourse.Where(s => s.CourseId == value.CourseId).FirstOrDefaultAsync();
                 result.Name = value.Name;
                 result.Hours = value.Hours;
                 result.TeacherId = value.TeacherId;

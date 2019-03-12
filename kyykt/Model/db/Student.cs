@@ -9,7 +9,6 @@ namespace kyykt
         {
             NeedToDo = new HashSet<NeedToDo>();
             Selection = new HashSet<Selection>();
-            StuSignIn = new HashSet<StuSignIn>();
         }
 
         public string StudentId { get; set; }
@@ -21,6 +20,5 @@ namespace kyykt
 
         public virtual ICollection<NeedToDo> NeedToDo { get; set; }
         public virtual ICollection<Selection> Selection { get; set; }
-        public virtual ICollection<StuSignIn> StuSignIn { get; set; }
     }
 }

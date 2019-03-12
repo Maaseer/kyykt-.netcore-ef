@@ -11,7 +11,8 @@ namespace kyykt
         public string Content { get; set; }
         public string Hide { get; set; }
         public string Time { get; set; }
-        public virtual Student Student { get; set; }
         public string Extra { get; set; }
+
+        public virtual Student Student { get; set; }
     }
 }
