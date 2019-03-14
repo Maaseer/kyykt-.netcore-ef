@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using kyykt.Model.QrCode;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -47,7 +48,7 @@ namespace kyykt.Controllers
 
         }
 
-        public static string GetRandomString(int length, bool useNum = true, bool useLow = true, bool useUpp = true, bool useSpe = true, string custom = "")
+        public static string GetRandomString(int length, bool useNum = true, bool useLow = true, bool useUpp = true, bool useSpe = false, string custom = "")
         {
             byte[] b = new byte[4];
             new System.Security.Cryptography.RNGCryptoServiceProvider().GetBytes(b);
@@ -70,6 +71,7 @@ namespace kyykt.Controllers
         public async Task<ActionResult<QrToTeacher>> Get(string ClassId)
         {
             int SignNum;
+            //计算签到次数
             try
             {
                 var result = db.OpeningClass.Where(s => s.ClassId == ClassId).FirstOrDefault();
@@ -79,11 +81,12 @@ namespace kyykt.Controllers
             {
                 return BadRequest();
             }
+            //若上一次签到未关闭，则将其设置为过期
             try
             {
                 var result = db.ClassSignIn.Where(s => s.ClassId == ClassId).OrderBy(s => s.SignInDate).LastOrDefault();
 
-                if (result.IsOverDue == 0)
+                if (result!=null && result.IsOverDue == 0)
                     result.IsOverDue = 1;
 
             }
@@ -122,14 +125,23 @@ namespace kyykt.Controllers
         {
             try
             {
-                var result = db.ClassSignIn.Where(s => s.SignInCode == value.SignInCode && s.IsOverDue != 1).FirstOrDefault();
+                var result =await  db.ClassSignIn.Where(s => s.SignInCode == value.SignInCode).FirstOrDefaultAsync();
+                if (result.IsOverDue == 1)
+                    return BadRequest("二维码已过期");
+                var temp = await db.ClassSignIn.Where(s => s.SignNum == result.SignNum).ToListAsync();
+                foreach(var i in temp)
+                {
+                    if (await db.StudentSignIn.Where(s => s.SignInCode == i.SignInCode && s.StudentId == value.StudentId).FirstOrDefaultAsync() != null)
+                        return BadRequest("本节课已签到");
+                }
+
                 await db.StudentSignIn.AddAsync(value);
                 await db.SaveChangesAsync();
                 return Ok();
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("签到错误");
             }
         }
 
@@ -151,8 +163,18 @@ namespace kyykt.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
+            try{
+                var result = await db.ClassSignIn.Where(s => s.SignInCode == id).FirstOrDefaultAsync();
+                result.IsOverDue = 1;
+                db.SaveChanges();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
     }
 }

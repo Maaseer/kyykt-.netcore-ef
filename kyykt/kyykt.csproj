@@ -26,6 +26,46 @@
 
   <ItemGroup>
     <None Include="wwwroot\img\logo.jpg" />
+    <None Include="wwwroot\Teacher\dist\js\carbon.js" />
+    <None Include="wwwroot\Teacher\dist\js\demo.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\chart.js\chart.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\chart.js\chart.min.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\font-awesome\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Teacher\dist\vendor\font-awesome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Teacher\dist\vendor\font-awesome\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Teacher\dist\vendor\font-awesome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Teacher\dist\vendor\font-awesome\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Teacher\dist\vendor\font-awesome\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Teacher\dist\vendor\jquery\jquery.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\jquery\jquery.min.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\popper.js\popper.min.js" />
+    <None Include="wwwroot\Teacher\dist\vendor\simple-line-icons\fonts\Simple-Line-Icons.svg" />
+    <None Include="wwwroot\Teacher\dist\vendor\simple-line-icons\fonts\Simple-Line-Icons.woff2" />
+    <None Include="wwwroot\Teacher\src\js\carbon.js" />
+    <None Include="wwwroot\Teacher\src\js\demo.js" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\carbon.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\utilities\_borders.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\utilities\_display.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_alert.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_avatars.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_buttons.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_card.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_forms.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_header.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_layout.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_mixins.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_nav.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_navbar.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_reboot.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_sidebar.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_switches.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_utilities.scss" />
+    <None Include="wwwroot\Teacher\src\sass\carbon\_variables.scss" />
+    <None Include="wwwroot\Teacher\src\sass\styles.scss" />
+    <None Include="wwwroot\Teacher\src\sass\vendor\vendor.scss" />
+    <None Include="wwwroot\Teacher\webpack.mix.js" />
+    <None Include="wwwroot\Teacher\yarn.lock" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1Development_1json__JSONSchema="http://json.schemastore.org/bungee-plugin" /></VisualStudio></ProjectExtensions>

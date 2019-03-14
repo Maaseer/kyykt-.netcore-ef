@@ -17,6 +17,7 @@ namespace kyykt
         public string Picture { get; set; }
         public string WxId { get; set; }
 
+        public string TeacherPasswd { get; set;  }
         public virtual ICollection<TeaCourse> TeaCourse { get; set; }
     }
 }

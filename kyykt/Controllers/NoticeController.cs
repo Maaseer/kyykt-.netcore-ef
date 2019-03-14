@@ -25,8 +25,8 @@ namespace kyykt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Notice>>> Get(string id)
         {
-            var result = await db.Notice.Where(s => s.ClassId == id).ToListAsync();
-            return result;
+            var result = await db.Notice.Where(s => s.ClassId == id).OrderByDescending(s=>s.Time).ToListAsync();
+            return Json(result);
         }
 
         // POST api/<controller>

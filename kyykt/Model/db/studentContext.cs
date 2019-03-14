@@ -165,7 +165,7 @@ namespace kyykt
                     .HasColumnName("head")
                     .HasColumnType("varchar(30)");
 
-                entity.Property(e => e.Time).HasColumnType("varchar(20)");
+                entity.Property(e => e.Time).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.Notice)
@@ -335,6 +335,7 @@ namespace kyykt
                 entity.Property(e => e.Sex).HasColumnType("enum('男','女')");
 
                 entity.Property(e => e.WxId).HasColumnType("varchar(50)");
+                entity.Property(e => e.TeacherPasswd).HasColumnType("varchar(50)");
             });
         }
     }
