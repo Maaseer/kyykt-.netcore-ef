@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace kyykt.Controllers
@@ -15,11 +13,11 @@ namespace kyykt.Controllers
         studentContext db = new studentContext();
         // GET: api/<controller>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Notice>>> Get()
+        public async Task<ActionResult<Notice>> Get(string ClassId, int NoticeId)
         {
-            var result = await db.Notice.ToListAsync();
+            var result = await db.Notice.Where(s => s.ClassId == ClassId && s.NoticeId == NoticeId).FirstOrDefaultAsync();
             if (result == null)
-                return NotFound("没有通知");
+                return NotFound("未找到通知");
             return result;
         }
 
@@ -27,8 +25,8 @@ namespace kyykt.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Notice>>> Get(string id)
         {
-            var result = await db.Notice.Where(s => s.ClassId == id).ToListAsync();
-            return result;
+            var result = await db.Notice.Where(s => s.ClassId == id).OrderByDescending(s=>s.Time).ToListAsync();
+            return Json(result);
         }
 
         // POST api/<controller>
@@ -41,7 +39,7 @@ namespace kyykt.Controllers
                 result.Time = value.Time;
                 result.ClassId = value.ClassId;
                 result.Content = value.Content;
-                result.head = value.head;
+                result.Head = value.Head;
                 await db.SaveChangesAsync();
             }
             catch { return BadRequest("修改通知出错"); }

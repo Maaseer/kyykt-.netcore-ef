@@ -42,6 +42,7 @@ namespace kyykt
             }
 
             //app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
