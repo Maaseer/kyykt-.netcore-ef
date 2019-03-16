@@ -117,7 +117,9 @@ namespace kyykt.Controllers
                 student.Picture = value.Picture;
                 await db.SaveChangesAsync();
             }
-            catch { return BadRequest("登陆失败"); }
+            catch {
+                return BadRequest("登陆失败");
+            }
             //保存数据库
 
             //返回学生信息 

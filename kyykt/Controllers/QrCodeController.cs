@@ -112,12 +112,7 @@ namespace kyykt.Controllers
             return new QrToTeacher(@"img\code" + ClassId + @".jpg", CodeStr);
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+
 
         // POST api/<controller>
         [HttpPost]
