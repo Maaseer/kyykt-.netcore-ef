@@ -16,8 +16,7 @@ namespace kyykt.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{TeacherId}")]
-        public async Task<ActionResult<IEnumerable<TeaCourse>>> Gets
-            (string TeacherId)
+        public async Task<ActionResult<IEnumerable<TeaCourse>>> Gets(string TeacherId)
         {
             try
             {

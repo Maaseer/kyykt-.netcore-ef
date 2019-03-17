@@ -35,4 +35,22 @@ namespace kyykt.Model
         public string ClassId { get; set; }
         public int SignInNums { get; set; }
     }
+    public class TeacherGetClass 
+    {
+        public TeacherGetClass(string classId, bool isInSign, string className, int signInTimes, List<ClassTime> classTimes)
+        {
+            ClassId = classId;
+            IsInSign = isInSign;
+            ClassName = className;
+            SignInTimes = signInTimes;
+            ClassTimes = classTimes;
+        }
+
+        public string ClassId { set; get; }
+        public bool IsInSign { get; set; }
+        public string ClassName { get; set; }
+        public int SignInTimes { get; set; }
+        public List<ClassTime> ClassTimes { get; set; }
+        
+    }
 }

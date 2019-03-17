@@ -5,6 +5,12 @@ namespace kyykt
 {
     public partial class ClassTime
     {
+        public ClassTime(string time, string place)
+        {
+            Time = time;
+            Place = place;
+        }
+
         public ClassTime(string time, string place, string classId)
         {
             Time = time;

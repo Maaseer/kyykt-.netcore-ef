@@ -47,10 +47,31 @@ namespace kyykt.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{TeacherId}")]
+        public async Task<ActionResult<IEnumerable<TeacherGetClass>>> Get(string TeacherId)
         {
-            return "value";
+            List<TeacherGetClass> data = new List<TeacherGetClass>();
+            var result = await db.TeaCourse.Where(s => s.TeacherId == TeacherId ).Include(d => d.OpeningClass).ThenInclude(s=>s.ClassTime).ToListAsync();
+            foreach (var item in result)
+            {
+                string className = item.Name;
+                foreach (var item1 in item.OpeningClass)
+                {
+                    if(item1.CloseClass == "0")
+                    {
+                        int times = item1.Times;
+                        string classId = item1.ClassId;
+                        List<ClassTime> classTimes = new List<ClassTime>();
+                        foreach (var item2 in item1.ClassTime)
+                        {
+                            classTimes.Add(new ClassTime(item2.Time, item2.Place));
+                        }
+                        bool isInSign = (await db.ClassSignIn.Where(s => s.ClassId == item1.ClassId && s.IsOverDue == 0).FirstOrDefaultAsync() == null);
+                        data.Add(new TeacherGetClass(classId, isInSign, className, times, classTimes));
+                    }
+                }
+            }
+            return data;
         }
 
         // POST api/<controller>

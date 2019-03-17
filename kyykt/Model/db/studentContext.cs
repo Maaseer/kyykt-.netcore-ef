@@ -338,5 +338,7 @@ namespace kyykt
                 entity.Property(e => e.TeacherPasswd).HasColumnType("varchar(50)");
             });
         }
+
+
     }
 }

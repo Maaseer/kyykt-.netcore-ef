@@ -43,7 +43,6 @@ namespace kyykt.Controllers
 
                 foreach (var j in temp_result)
                     temp.ClassTime.Add(new ClassTime(j.Time, j.Place, j.ClassId));
-
                 data.Add(temp);
             }
             return Json(data);
