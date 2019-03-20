@@ -79,8 +79,17 @@ namespace kyykt.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<ActionResult<OpeningClass>> Post([FromBody]OpeningClass vaule)
         {
+            try
+            {
+                var result = await db.OpeningClass.Where(s => s.ClassId == vaule.ClassId).FirstOrDefaultAsync();
+                return result;
+            }
+            catch
+            {
+                return NotFound("未找到该课程");
+            }
         }
 
         // PUT api/<controller>/5

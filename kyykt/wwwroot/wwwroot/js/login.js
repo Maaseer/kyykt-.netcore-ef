@@ -3,8 +3,8 @@
 	data:{
 		products:[],
 		url:'api/signin',
-		ClassId:window.localStorage.getItem("SignInClassId"),
-		SignInNums:window.localStorage.getItem("SignInClassTimes"),
+		ClassId:'Cd11',
+		SignInNums:1,
 		ti:null,
 		HasSignIn:0,
 		UnHasSignIn:100,
@@ -64,7 +64,7 @@ var QrCode = new Vue({
 	el:"#QrCode",
 	data:{
 		url:'api/QrCode',
-		classId:window.localStorage.getItem("SignInClassId"),
+		classId:'Cd11',
 		imgInfo:{
 			src:'',
 			codeText:''
@@ -87,28 +87,12 @@ var QrCode = new Vue({
 		},
 		stopSignIn(){
 			var vm = this;
-			if (confirm("确定停止签到？")) {
-				axios.get('/api/QrCode',{
-					params:{
-						classId:vm.classId
-					}
-				}).then(function(response){
-					axios.delete('/api/QrCode/' + response.data.qrCodeStr)
-					.then(function(response){
-						window.clearInterval(vm.ti);
-						window.localStorage.setItem("login",'1'	);
-						//window.opener.location.herf=window.opener.location.herf;
-						window.opener.location.reload();
-						//window.opener.location = "javascript:getData()";
-						window.setTimeout(window.close,500);
-					})
-				})
-			} 
+			window.clearInterval(vm.ti);
+			
 		},
-		suspendSignIn(){	
+		suspendSignIn(){
 			var vm = this;
 			window.clearInterval(vm.ti);
-
 		},
 		continueSignIn(){
 			var vm = this;
@@ -118,11 +102,8 @@ var QrCode = new Vue({
 	},
 	created(){
 		var vm = this;
+		console.log("2222222");
 		vm.ti = window.setInterval(vm.getQrCode, 15000);
 		vm.getQrCode();
-	},
-	beforeDestroy(){
-
 	}
 })
-

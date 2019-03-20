@@ -10,6 +10,7 @@ namespace kyykt.Model
         public string CourseName { get; set; }
         public List<ClassTime> ClassTime { get; set; }
         public string CourseId { get; set; }
+        public string ClassId { get; set; }
     }
 
     public class StudentInClass

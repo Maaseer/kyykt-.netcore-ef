@@ -15,118 +15,34 @@
     <script src="./vendor/vue/vue.js"></script>
 
 </head>
-<body>
-    <div class="row" id="studentTable">
-        <div class="col-md-5 offset-md-1">
-            <div class="card">
-                <div class="card-header bg-light">
-                    学生签到表
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <td>学号</td>
-                                    <td>姓名</td>
-                                    <td>联系方式</td>
-                                    <td>是否签到</td>
-                                    <td>签到时间</td>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr v-for="item in products" v-bind:class="{NoSignIn:!item.studentHasSignIn}">
-                                    <td>{{item.studentId}}</td>
-                                    <td class="text-nowrap">{{item.studentName}}</td>
-                                    <td>{{item.studentTel}}</td>
-                                    <td>{{item.studentHasSignIn}}</td>
-                                    <td>{{item.studentSignInTime.substring(0,19)}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-5 ">
-            <div class="card">
-                <div class="card-header bg-light">
-                    签到情况
-                </div>
-
-                <div class="card-body">
-                        <div class="progress mt-3">
-                            <div class="progress-bar bg-danger" role="progressbar" v-bind:style="styleObjectUnHas" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{UnHasSignIn}}</div>
-                        </div>
-                        <div class="progress mt-3">
-                            <div class="progress-bar bg-info" role="progressbar" v-bind:style="styleObjectHas" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{HasSignIn}}</div>
-                        </div>
-                    </div>
-                
-            </div>
-        </div>
-        </div>
-
-
+<body >
     <div class="row">
         <div class="col-md-5 offset-md-1">
-                <div class="card" id="QrCode">
+            <div class="row" id="studentTable">
+                <div class="col-md-12">
+                    <div class="card">
                         <div class="card-header bg-light">
-                            <div class="row">
-                                <div class="col-md-6">
-                                        请扫码二维码签到
-                                </div>
-                                <div class="col-md-6">
-                                        <button class="btn btn-success fa-pull-right" type="button" v-on:click="continueSignIn">
-                                                <i class="fa fa-cut"></i>&nbsp; 继续变化
-                                        </button>
-                                        <button class="btn btn-warning fa-pull-right" type="button" v-on:click="suspendSignIn">
-                                                <i class="fa fa-clipboard"></i> &nbsp; 暂停变化
-                                        </button>
-                                        <button class="btn btn-danger fa-pull-right" type="button" v-on:click="stopSignIn">
-                                                <i class="fa fa-trash"></i> &nbsp; 停止签到
-                                        </button>
-                                </div>
-                            </div>
+                            学生签到表
                         </div>
-                        <div >
-                            <div class="card-body">
-                                <img v-bind:src="imgInfo.src" class="img-fluid rounded" alt="Cinque Terre">
-                            </div>
-                        </div>
-                    </div>
-        </div>
         
-    </div>
-
-    <div class="row">
-        <div id="classTable" class="col-md-12">
-                <div class="card">
-                        <div class="card-header bg-light">
-                            教师课表                        
-                        </div>
-                                
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <td>课程号</td>
-                                            <td>课程名</td>
-                                            <td>上课时间</td>
-                                            <td>签到次数</td>
-                                            <td>签到状态</td>
+                                            <td>学号</td>
+                                            <td>姓名</td>
+                                            <td>联系方式</td>
+                                            <td>是否签到</td>
+                                            <td>签到时间</td>
                                         </tr>
                                     </thead>
         
                                     <tbody>
-                                        <tr v-for="item in products" v-bind:class="{NoSignIn:!item.isInSign}">
-                                            <td>{{item.classId}}</td>
-                                            <td class="text-nowrap">{{item.className}}</td>
-                                            <td>{{item.signInTimes}}</td>
+                                        <tr v-for="item in products" v-bind:class="{NoSignIn:!item.studentHasSignIn}">
+                                            <td>{{item.studentId}}</td>
+                                            <td class="text-nowrap">{{item.studentName}}</td>
+                                            <td>{{item.studentTel}}</td>
                                             <td>{{item.studentHasSignIn}}</td>
                                             <td>{{item.studentSignInTime.substring(0,19)}}</td>
                                         </tr>
@@ -136,15 +52,60 @@
                         </div>
                     </div>
                 </div>
+        
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            签到情况
+                        </div>
+        
+                        <div class="card-body">
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-danger" role="progressbar" v-bind:style="styleObjectUnHas" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{UnHasSignIn}}</div>
+                                </div>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-info" role="progressbar" v-bind:style="styleObjectHas" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{HasSignIn}}</div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
-
+        <div class="col-md-5">
+            <div class="card" id="QrCode">
+                <div class="card-header bg-light">
+                    <div class="row">
+                        <div class="col-md-4">
+                                请扫码二维码签到
+                        </div>
+                        <div class="col-md-8">
+                                <button class="btn btn-success fa-pull-right" type="button" v-on:click="continueSignIn">
+                                        <i class="fa fa-cut"></i>&nbsp; 继续变化
+                                </button>
+                                <button class="btn btn-warning fa-pull-right" type="button" v-on:click="suspendSignIn">
+                                        <i class="fa fa-clipboard"></i> &nbsp; 暂停变化
+                                </button>
+                                <button class="btn btn-danger fa-pull-right" type="button" v-on:click="stopSignIn">
+                                        <i class="fa fa-trash"></i> &nbsp; 停止签到
+                                </button>
+                        </div>
+                    </div>
+                </div>
+                <div >
+                    <div class="card-body"  >
+                        <img v-bind:src="imgInfo.src" class="img-fluid rounded" alt="Cinque Terre">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
         <script src="./vendor/jquery/jquery.min.js"></script>
         <script src="./vendor/popper.js/popper.min.js"></script>
         <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="./vendor/chart.js/chart.min.js"></script>
         <script src="./js/carbon.js"></script>
         <script src="./js/demo.js"></script>
-    <script src="js/login.js"></script>
+        <script src="js/login.js"></script>
 </body>
+</html>
