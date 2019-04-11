@@ -56,6 +56,10 @@ namespace kyykt
                 entity.Property(e => e.ReplyMessage).HasColumnType("varchar(500)");
 
                 entity.Property(e => e.StudentId).HasColumnType("varchar(20)");
+                entity.Property(e => e.MessageHead).HasColumnType("varchar(20)");
+                entity.Property(e => e.HasReply)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'0'");
             });
 
             modelBuilder.Entity<ClassSignIn>(entity =>

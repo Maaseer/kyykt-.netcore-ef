@@ -11,5 +11,7 @@ namespace kyykt
         public string Message { get; set; }
         public DateTime MessageTime { get; set; }
         public string ReplyMessage { get; set; }
+        public string MessageHead { get; set; }
+        public int HasReply { get; set; }
     }
 }

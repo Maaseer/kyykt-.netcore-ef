@@ -15,9 +15,9 @@ namespace kyykt.Controllers
     public class ClassController : Controller
     {
         studentContext db = new studentContext();
-        ILogger<TodoController> logger;
+        ILogger<ClassController> logger;
 
-        public ClassController(ILogger<TodoController> logger)
+        public ClassController(ILogger<ClassController> logger)
         {
             this.logger = logger;
         }
